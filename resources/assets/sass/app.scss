@@ -1,0 +1,219 @@
+html {
+    color: #000;
+    background: #B5BBCA; }
+  
+  body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0; 
+  box-sizing: border-box}
+  
+  fieldset, img {
+    border: 0; }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal; }
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0; }
+  
+  address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal; }
+  
+  li {
+    list-style: none; }
+  
+  caption, th {
+    text-align: left; }
+  
+  q:before, q:after {
+    content: ''; }
+  
+  abbr, acronym {
+    border: 0;
+    font-variant: normal; }
+  
+  sup {
+    vertical-align: text-top; }
+  
+  sub {
+    vertical-align: text-bottom; }
+  
+  input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    font-size: 100%; }
+  
+  legend {
+    color: #000; }
+  
+  del, ins {
+    text-decoration: none; }
+
+
+
+
+    .header-menu{
+      display: inline-block;
+      margin: auto;
+      padding:0;
+    }
+
+
+    .profile-menu{
+      @extend .header-menu;
+      .notification{
+        padding: 0 !important;
+
+      }
+    }
+
+   
+    .main-container{
+      display: flex;
+    justify-content: flex-start;
+    background-color: #B5BBCA;
+    height: 100%; 
+    .drawerleft{
+      margin-left:0;
+      width: 300px;  
+      transition:margin-left .5s;
+      align-self: flex-start;
+    }
+    .main-area{
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      width: 100%;
+      
+
+      .add-note{
+        margin: 36px auto !important;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 10px;
+
+        .create-note{
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          
+
+          h3,p{
+            font-size: 18px;
+            padding: 10px 0 0 14px;
+           
+            outline: none;
+            &::focus{
+             outline: none;
+            }
+          }
+          .add-checkbox{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            align-items: center;
+            padding: 0 26px;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+            margin: 0;
+           
+            .add-checkbox-data{
+              margin:0 10px
+            }
+          }
+          .create-checked{
+
+            width: 100%;
+            font-size: 14px;
+            text-align: left;
+            margin: 10px 0 0 10px;
+            padding: 0;
+
+          }
+          .create-note-bottom{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          }
+        }
+                                                    
+    }
+
+    .add-note-data{
+      display: flex;
+      justify-content:space-between;
+
+
+    
+    h3{
+      padding:14px;
+    }
+    }
+
+    .note-list{
+      
+      display: flex;
+      width: 780px;
+      flex-wrap:wrap;
+      align-self: center;
+      overflow: hidden;
+
+      justify-content: center;
+    }
+    .note-container{
+      min-height: 150px;
+      height: auto;
+      width: 240px;
+      margin: 10px;
+      
+
+      &:hover{
+        z-index: 3;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px,
+                    rgba(0, 0, 0, 0.12) 0px 1px 4px,
+                    rgba(0, 0, 0, 0.12) 3px 3px 6px,
+                    rgba(0, 0, 0, 0.12) 3px 3px 4px !important;
+      }
+      .note{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        padding: 16px 0 0 0;
+      .note-data{
+        display: flex;
+        justify-content: space-between;
+        // height: 100%;
+        flex-direction: column;
+        overflow-wrap: break-word;
+        h3{
+          font-size: 20px;
+          padding: 14px;
+          margin: 0;
+          font-weight: 100;
+        }
+        .list{
+          margin-left: 10px;
+        }
+         p{
+          font-size: 23px;
+          padding-left: 16px;
+          font-weight: 100;
+        }
+        
+      }
+      .bottom-menu{
+        display: flex;
+       }
+      }
+    }
+
+  }
+    }
