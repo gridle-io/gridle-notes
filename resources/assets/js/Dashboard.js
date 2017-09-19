@@ -15,6 +15,7 @@ class Dashboard extends React.Component{
     this.state = {notes:[]};
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
+    this.editNote=this.editNote.bind(this);
 
 
 
@@ -23,9 +24,6 @@ class Dashboard extends React.Component{
 
   deleteNote(props){
     var arr=this.state.notes;
-    // console.log("heyyyy final deleted");
-    // console.log(this.state.notes);
-    // console.log("heyyyy final deleted  arrr");
     console.log("From dash");
     console.log(props);
     
@@ -35,6 +33,24 @@ class Dashboard extends React.Component{
     console.log(arr);
 
   }
+
+
+  editNote(key){
+console.log(key);
+  }
+
+  updateCheckStatus(id){
+    console.log(key);
+    --key;
+    console.log(this.state.checklist[key].checked);
+    this.state.checklist[key].checked=!this.state.checklist[key].checked;
+
+    this.forceUpdate()
+
+    console.log(this.state.checklist[key]);   
+  }
+
+
   addnote(title,data,checked){
     checked = checked || false;
     var id=this.state.notes.length + 1;
@@ -54,7 +70,11 @@ class Dashboard extends React.Component{
 return(
   <div className="main-area">
       <Card addnote={this.addnote.bind(this)}/>
-      <Note notes={this.state.notes} delete={this.deleteNote.bind(this)}/>
+      <Note notes={this.state.notes} 
+          
+          delete={this.deleteNote.bind(this)} 
+          updateckecklist={this.updateCheckStatus.bind(this)}
+          edit={this.editNote.bind(this)}/>
      </div>
   );
 }

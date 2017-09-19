@@ -15,6 +15,8 @@ constructor(props) {
     this.state = { 
       shadow: 1 ,
       notes:this.props.notes,
+
+      
     }
     this.handleClick=this.handleClick.bind(this);
   }
@@ -34,31 +36,14 @@ constructor(props) {
   
   // console.log(this.props.notes);
   return(
-    <div className="note-list">
-        {/* <Paper className="note-container" 
-            zDepth={this.state.shadow} 
-            children={
-              <div className="note">
-              <div className="note-data">
-                
-                  <h3>Title</h3>
-                  <p>Data
-                    sdks
-                    sdba
-                    ajskd
-                    agakd
-                    
-                  </p>
-                  </div>
-                  <NoteMenu />
-
-              </div>
-            }/> */}
-           
+    <div className="note-list">  
   {this.props.notes.map(note => (
     
         <Paper className="note-container" 
                 key={note.id}
+                onClick={
+                  this.props.edit
+                }
                 zDepth={this.state.shadow} 
                 children={
                     <div className="note">
@@ -72,7 +57,7 @@ constructor(props) {
                               <div className="list"> 
                                 {note.data.map(checklist => (
                     
-                                            <CheckListNote key={checklist.id} label={checklist.checkdata} checked={checklist.checked} />
+                                            <CheckListNote key={checklist.id} label={checklist.checkdata} update={this.updateCheckList} checked={checklist.checked} />
                                         ))}
                               </div>
                               : //else
