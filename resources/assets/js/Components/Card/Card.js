@@ -17,9 +17,7 @@ export default class Card extends Component {
     super(props);
     this.state = {
         isCreateNote:true,
-        checked:true
-        
-        
+        checked:true   
     }
 
     this.ToggleCreateNote = this.ToggleCreateNote.bind(this);
@@ -32,8 +30,6 @@ export default class Card extends Component {
 
 
 handleClick(e){ 
-
-  console.log(this.state);
   this.setState({isCreateNote:!this.state.isCreateNote});
 }
 
@@ -44,7 +40,7 @@ ToggleCreateNote(title,data){
   console.log(data);
  
   
-  if(title && data){
+  if(title || data){
   this.props.addnote(title,data);
   }
   this.setState({isCreateNote:!this.state.isCreateNote});
@@ -86,10 +82,10 @@ handleChackedClick(){
                           </div>} 
 
                       />
-              <CreateNote 
-                click={this.state.isCreateNote}
-                ToggleCreateNote={this.ToggleCreateNote.bind(this)}
-                 />
+                
+                <CreateNote 
+                  click={this.state.isCreateNote}
+                  ToggleCreateNote={this.ToggleCreateNote.bind(this)}/>
 
                  <CreateCheckedNote 
                 click={this.state.checked}

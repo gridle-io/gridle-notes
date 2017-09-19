@@ -17,7 +17,11 @@ class Dashboard extends React.Component{
     this.deleteNote=this.deleteNote.bind(this);
   }
 
-
+  editNote(props){
+    var notes=this.state.notes;
+    var note=notes.filter(function(item) { return item});
+    console.log(note);
+  }
   deleteNote(props){
     var arr=this.state.notes;
     arr = arr.filter(item => item.id !== props);
@@ -42,7 +46,7 @@ class Dashboard extends React.Component{
     return(
       <div className="main-area">
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)}/>
+          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.editNote.bind(this)}/>
         </div>
       );
     }

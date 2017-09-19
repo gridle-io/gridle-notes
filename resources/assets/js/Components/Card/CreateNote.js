@@ -41,15 +41,20 @@ class CreateNote extends Component {
             title: '',
             data: '',
             done:this.props.click,
-           
+            firstTimeFocus: false
         }   
-
+        this.focus = this.focus.bind(this);
         this.handleDataChange=this.handleDataChange.bind(this);
         this.handleSubmit=this.handleSubmit.bind(this);
         this.handleTitleChange=this.handleTitleChange.bind(this);
         
     }
 
+
+    focus() {
+        this.input.focus();
+    }
+    
 
     handleSubmit(event){
                  
@@ -62,24 +67,28 @@ class CreateNote extends Component {
 
     
     handleTitleChange(evt){
-        this.setState({ title: evt.target.value });
-       
+        this.setState({ title: evt.target.value });  
     }
 
     handleDataChange(evt){
         this.setState({ data: evt.target.value });
     }
-   
 
-
-
-      
     render() {
 
         const cardstyle = {
             width: 600,
          };
         
+        const focusUsernameInputField = input => {
+            
+            if (input && !this.props.click && !this.state.firstTimeFocus) {
+                setTimeout(() => {
+                    input.focus();
+                    this.state.firstTimeFocus = true;
+                }, 100);
+            }
+        };
         return (
             <Paper style={cardstyle} zDepth={1} hidden={this.props.click}
                 children={<div className="create-note">
@@ -87,6 +96,7 @@ class CreateNote extends Component {
                     
                     <h3>
                         <TextField
+                                ref='title'
                                 hintText="Title"
                                 fullWidth={true}
                                 className="add-checkbox-data"
@@ -96,12 +106,14 @@ class CreateNote extends Component {
                                 underlineShow={false}
                                 style={styles.textareaStyle}
                                 hintStyle={styles.title}
-                        
-                         /> 
+                        /> 
                        
-                    </h3>     
+                    </h3>           
                     <h3>
                         <TextField
+
+                                
+                        ref={focusUsernameInputField}
                                 hintText="Write a note"
                                 fullWidth={true}
                                 className="add-checkbox-data"
@@ -115,15 +127,6 @@ class CreateNote extends Component {
                          /> 
                        
                     </h3>                  
-
-                        
-
-                    
-                       
-                    
-            
-
-
                     <div className="create-note-bottom">
 
                         <NoteMenu />
