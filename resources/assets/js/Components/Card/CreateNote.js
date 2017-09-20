@@ -61,7 +61,9 @@ class CreateNote extends Component {
                         this.props.ToggleCreateNote(this.state.title,this.state.data);
                         this.setState({title:"",data:""})
                         this.setState({done: true})
+                        this.setState({firstTimeFocus: false})
                         console.log(this.state);
+
     
     }
 
