@@ -23,6 +23,7 @@ constructor(props) {
 
   editNote(key){
    console.log(key);
+   this.props.edit(key);
    
   }
   handleClick(props){
@@ -30,8 +31,6 @@ constructor(props) {
     console.log("from note");
 
     console.log(props);
-    
-    
     
     this.props.delete(props);
   }
@@ -45,15 +44,15 @@ constructor(props) {
       {this.props.notes.map(note => (
         
             <Paper className="note-container" 
-                    key={note.id}
+                    key={note.note_id}
                   
                     zDepth={this.state.shadow} 
                     children={
-                        <div className="note" onClick={ event => { console.log('kksdksdksd') }   }>
+                        <div className="note" onClick={event=> {this.editNote(note.note_id)}}>
                           <div className="note-data" >
                             
-                              {note.title=="Title" || note.title == " " ? '':
-                                <h3 onClick={event=> {this.editNote(note.id)}}>{note.title}</h3>
+                              {note.title=="Title" || note.title=="" ? '':
+                                <h3 >{note.title}</h3>
                               }
                     
                               {note.checked  ?
@@ -69,7 +68,7 @@ constructor(props) {
         
                           </div>
                           {/* <button onClick={this.handleClick.bind(this)}>Click me</button> */}
-                          <NoteMenu delete={this.handleClick.bind(this)} id={note.id}/>
+                          <NoteMenu delete={this.handleClick.bind(this)} id={note.note_id}/>
                         </div>
                     }
               />
