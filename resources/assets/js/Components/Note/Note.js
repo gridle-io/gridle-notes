@@ -37,19 +37,20 @@ constructor(props) {
 
   render(){
   
-  // console.log(this.props.notes);
+  console.log('notes',this.props.notes);
   return(
-    <div className="note-list">
 
-      {this.props.notes.map(note => (
+    <div className="note-list">
+      
+      {this.props.notes.map((note,i) => (
         
             <Paper className="note-container" 
-                    key={note.note_id}
+                    key={i}
                   
                     zDepth={this.state.shadow} 
                     children={
-                        <div className="note" >
-                          <div className="note-data" onClick={event=> {this.editNote(note.note_id)}}>
+                        <div className="note" onClick={event=> {this.editNote(note.id)}}>
+                          <div className="note-data" >
                             
                               {note.title=="Title" || note.title=="" ? '':
                                 <h3 >{note.title}</h3>

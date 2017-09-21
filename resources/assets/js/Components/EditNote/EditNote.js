@@ -43,13 +43,15 @@ const styles={
 export default class EditNote extends React.Component {
   
     constructor(props) {
+      console.log("hi from e",props);
       super(props);
       this.state = {
-          title: this.props.note.title,
-          data: this.props.note.data,
+          title: props.note.title,
+          data: props.note.data,
           firstTimeFocus: false,
-          note:this.props.note
-      }   
+          note:props.note
+      };
+
       this.handleClose=this.handleClose.bind(this);
       this.handleOpen=this.handleOpen.bind(this);
     
@@ -92,13 +94,18 @@ handleDataChange(evt){
   };
 
   handleClose(){
-    this.props.openEdit();
-  };
+    this.props.openEdit();}
 
+  componentWillReceiveProps(props) {
+    this.setState({note: props.note});
+    this.setState({title:props.note.title, data:props.note.data})
+
+}
   render() {
     
-    console.log('state of edit text',this.state);
     console.log('props of edit text',this.props);
+
+    console.log('state of edit text',this.state.note.title);
     const focusUsernameInputField = input => {
       
       if (input && !this.props.click && !this.state.firstTimeFocus) {
@@ -121,7 +128,7 @@ handleDataChange(evt){
         onClick={this.handleClose}
       />,
     ];
-
+    
     return (
       <div>
 

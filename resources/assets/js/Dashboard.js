@@ -14,11 +14,13 @@ import axios from 'axios';
 class Dashboard extends React.Component{
   
   constructor(props) {
+    
     super(props);
+    
     this.state = {
             notes:[],
             isopenEditpopup:false,     
-            editablenote: 'dsd',   
+            editablenote: [],   
     };
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
@@ -38,22 +40,22 @@ class Dashboard extends React.Component{
   openEditPopup(){
     this.setState({isopenEditpopup:!this.state.isopenEditpopup});
     console.log('opning,,,,edit',this.state.isopenEditpopup);
-    this.forceUpdate();
+ 
   }
 
 
   editNote(props){
    
-    
+    console.log("dsds",props);
     var notes=this.state.notes;
     var note=notes.filter(function(item)
       {
-        if(item.note_id == props){
+        if(item.id == props){
           { return item};
         }
       });
 
-      console.log("selected note",note[0]);
+      console.log("selected note",note);
       console.log(this);
 
       this.setState({editablenote:note[0]});
@@ -96,13 +98,13 @@ class Dashboard extends React.Component{
     });
   }
   render (){
-    // console.log("dsdsd",this.state.notes);
+
     return(
       <div className="main-area">
         
         <EditNote  note={this.state.editablenote} open={this.state.isopenEditpopup} openEdit={this.openEditPopup.bind(this)}/>
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={(key)=>{this.editNote(key)}}/>
+          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.editNote.bind(this)}/>
         </div>
 
 
