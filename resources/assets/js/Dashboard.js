@@ -79,7 +79,8 @@ class Dashboard extends React.Component{
     axios.post('http://localhost/api/notes/', {
       "title":title,
       "data":data,
-      "is_checklist":1
+      "is_checklist":0, 
+      "checklist":[]
     })
     .then(function (response) {
       console.log('resp',response.data);

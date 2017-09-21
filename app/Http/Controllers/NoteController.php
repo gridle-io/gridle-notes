@@ -37,8 +37,6 @@ class NoteController extends Controller
 
                foreach ($requestData["checklist"] as $checkbox) {
                                
-                        
-               
                 $note->checklist()->save(
                     new checklist(["label"=>$checkbox["label"],"is_checked"=>$checkbox["is_checked"]])
                 );
@@ -71,10 +69,6 @@ class NoteController extends Controller
     {
        
         $note = Note:: where('note_id',$id)->delete();
-       
-        
-        
-
         return response()->json("deleletd", 204);
     }
 }
