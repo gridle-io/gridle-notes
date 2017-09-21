@@ -14,7 +14,7 @@ class CreateNotesTable extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->increments('note_id');
+            $table->increments('id');
             $table->string('title');
             $table->boolean('is_checklist');
             $table->text('data');

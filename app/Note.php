@@ -14,4 +14,10 @@ class Note extends Model
     protected $primarykey = 'note_id';
 
     protected $fillable = ['title', 'is_checklist','data'];
+
+   
+     public function checklist()
+	  {
+	    return $this->hasMany('App\checklist');
+	  }
 }
