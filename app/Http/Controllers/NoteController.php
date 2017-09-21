@@ -42,11 +42,14 @@ class NoteController extends Controller
         return response()->json($note, 200);
     }
 
-    public function delete(Note $note)
+    public function delete(Request $request,$id)
     {
+       
+        $note = Note:: where('note_id',$id)->delete();
+       
         
-        return ($note);
-        $note->delete($note->note_id);
-        return response()->json(null, 204);
+        
+
+        return response()->json("deleletd", 204);
     }
 }

@@ -11,6 +11,7 @@ class Note extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $primarykey = 'note_id';
 
     protected $fillable = ['title', 'is_checklist','data'];
 }

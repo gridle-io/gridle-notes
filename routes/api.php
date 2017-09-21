@@ -22,4 +22,4 @@ Route::get('notes', 'NoteController@index');
 Route::get('notes/{note}', 'NoteController@show');
 Route::post('notes', 'NoteController@store');
 Route::put('notes/{note}', 'NoteController@update');
-Route::delete('notes/{note}', 'NoteController@delete');
+Route::delete('notes/{id}', 'NoteController@delete');

@@ -48,8 +48,8 @@ constructor(props) {
                   
                     zDepth={this.state.shadow} 
                     children={
-                        <div className="note" onClick={event=> {this.editNote(note.note_id)}}>
-                          <div className="note-data" >
+                        <div className="note" >
+                          <div className="note-data" onClick={event=> {this.editNote(note.note_id)}}>
                             
                               {note.title=="Title" || note.title=="" ? '':
                                 <h3 >{note.title}</h3>

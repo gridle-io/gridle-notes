@@ -1,7 +1,5 @@
 import React ,{Component}from 'react';
 import ReactDOM from 'react-dom';
-
-
 import Card  from './Components/Card/Card';
 import Note from './Components/Note/Note';
 
@@ -19,11 +17,13 @@ class Dashboard extends React.Component{
     super(props);
     this.state = {
             notes:[],
-            isopenEditpopup:false,          
+            isopenEditpopup:false,     
+            editablenote: 'dsd',   
     };
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
     this.openEditPopup=this.openEditPopup.bind(this);
+    this.editNote=this.editNote.bind(this);
     
   }
   componentDidMount() {
@@ -36,39 +36,39 @@ class Dashboard extends React.Component{
   }
 
   openEditPopup(){
-    this.setState({isopenEditpopup:true});
-    console.log(this.state.isopenEditpopup);
+    this.setState({isopenEditpopup:!this.state.isopenEditpopup});
+    console.log('opning,,,,edit',this.state.isopenEditpopup);
+    this.forceUpdate();
   }
 
 
   editNote(props){
    
-    this.openEditPopup();
-    // var notes=this.state.notes;
-    
-    // var note=notes.filter(function(item)
-    // {
-    //     if(item.note_id == props){
-    //       { return item};
-    //     }
-    //   });
- 
-  }
-  deleteNote(props){
-    // var arr=this.state.notes;
-    // arr = arr.filter(item => item.note_id !== props);
-    // this.setState({notes:arr});
-    // console.log(arr);
-    console.log('delete this note -->>>>>>',props);
     
     var notes=this.state.notes;
     var note=notes.filter(function(item)
-    {
-      if(item.note_id == props){
-        { return item};
-      }
-    });
-    console.log('Note', note);
+      {
+        if(item.note_id == props){
+          { return item};
+        }
+      });
+
+      console.log("selected note",note[0]);
+      console.log(this);
+
+      this.setState({editablenote:note[0]});
+      console.log("editable note",this.state.editablenote);
+      
+      this.openEditPopup();
+ 
+  }
+  deleteNote(props){
+    var arr=this.state.notes;
+    arr = arr.filter(item => item.note_id !== props);
+    this.setState({notes:arr});
+    console.log(arr);
+    console.log('delete this note -->>>>>>',props);
+    axios.delete('http://localhost/api/notes/'+props );
      
   }
 
@@ -77,7 +77,6 @@ class Dashboard extends React.Component{
     var that=this;
     checked = checked || false;
     axios.post('http://localhost/api/notes/', {
-     
       "title":title,
       "data":data,
       "is_checklist":1
@@ -99,9 +98,10 @@ class Dashboard extends React.Component{
     // console.log("dsdsd",this.state.notes);
     return(
       <div className="main-area">
-        <EditNote open={this.state.isopenEditpopup}/>
+        
+        <EditNote  note={this.state.editablenote} open={this.state.isopenEditpopup} openEdit={this.openEditPopup.bind(this)}/>
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.editNote.bind(this)}/>
+          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={(key)=>{this.editNote(key)}}/>
         </div>
 
 
