@@ -38,7 +38,7 @@ class CreateNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '',
+            title: 'Title',
             data: '',
             done:this.props.click,
             firstTimeFocus: false
@@ -59,7 +59,7 @@ class CreateNote extends Component {
     handleSubmit(event){
                  
                         this.props.ToggleCreateNote(this.state.title,this.state.data);
-                        this.setState({title:"",data:""})
+                        this.setState({title:"Title",data:""})
                         this.setState({done: true})
                         this.setState({firstTimeFocus: false})
                         console.log(this.state);

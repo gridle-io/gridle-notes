@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Checkbox;
 
-class DatabaseSeeder extends Seeder
+class CheckboxTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+     
+        $Notes = Note::all()->lists('note_id');   //
     }
 }

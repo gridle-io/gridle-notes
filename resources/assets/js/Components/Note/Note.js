@@ -16,7 +16,7 @@ constructor(props) {
       shadow: 1 ,
       notes:this.props.notes,
     }
-    this.handleClick=this.handleClick.bind(this);
+    this.handleDelete=this.handleDelete.bind(this);
   }
  
 
@@ -26,12 +26,12 @@ constructor(props) {
    this.props.edit(key);
    
   }
-  handleClick(props){
+  handleDelete(props){
 
-    console.log("from note");
+    console.log("delete from note");
 
-    console.log(props);
-    
+    console.log(this.props);
+    // console.log(props);
     this.props.delete(props);
   }
 
@@ -68,7 +68,7 @@ constructor(props) {
         
                           </div>
                           {/* <button onClick={this.handleClick.bind(this)}>Click me</button> */}
-                          <NoteMenu delete={this.handleClick.bind(this)} id={note.note_id}/>
+                          <NoteMenu delete={this.handleDelete.bind(this)} id={note.note_id}/>
                         </div>
                     }
               />

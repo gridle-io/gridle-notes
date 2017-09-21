@@ -20,6 +20,7 @@ class CreateChecklistTable extends Migration
             $table->string('label');
             $table->boolean('is_checked');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

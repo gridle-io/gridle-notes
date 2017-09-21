@@ -19,6 +19,7 @@ class CreateNotesTable extends Migration
             $table->boolean('is_checklist');
             $table->text('data');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
