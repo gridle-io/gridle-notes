@@ -13,4 +13,10 @@ class Note extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['title', 'is_checklist','data'];
+
+   
+     public function checklist()
+	  {
+	    return $this->hasMany('App\checklist');
+	  }
 }
