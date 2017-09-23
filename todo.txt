@@ -1,0 +1,29 @@
+//Todo
+
+
+api call path
+localhost/api/notes/{id}
+data-> formate 1
+{
+	"title":"sdsdsds",
+	"data":"",
+	"is_checklist":1,
+	"checklist":[
+		{"label":"checklist" ,
+		"is_checked": 1},
+		{"label":"checklist 1" ,
+		"is_checked": 1},
+
+	{"label":"checklist 2" ,
+		"is_checked": 0}
+
+	]
+}
+
+data -> formate 2
+{
+	"title":"sdsdsds",
+	"data":"",
+	"is_checklist":1,
+    "checklist":[]
+}
