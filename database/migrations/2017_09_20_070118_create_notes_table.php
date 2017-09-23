@@ -17,7 +17,7 @@ class CreateNotesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->boolean('is_checklist');
-            $table->text('data');
+            $table->text('data')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

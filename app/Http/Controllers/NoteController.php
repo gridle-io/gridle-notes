@@ -10,7 +10,7 @@ class NoteController extends Controller
     public function index()
     {
 
-        return Note::all();
+        return Note::with('checklist')->get();
     }
 
     public function show(Note $note)
@@ -20,16 +20,13 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
-        // check if is_checked is 0 @if (condition) {
-            # code...
-        // return $request;
+
         
         $requestData = $request->all();
 
-        // return $requestData;
+        
         $note = Note::create($requestData);
-        // return $note->title;
-        // return $requestData["title"];
+      
         if ($requestData["is_checklist"]==1) {
 
                 $note = Note::find($note->id);
@@ -43,17 +40,20 @@ class NoteController extends Controller
             }
 
         }
-
+        
+        $queryResult = Note::find($note->id)->with('checklist')->get();
         // return data respond to the frond-end
+        return $queryResult;
         $arrayName = array(
             'note_id'=>$note->id,
             'title'=>$note->title,
             'data'=>$note->data,
             'is_checklist'=>$note->is_checklist,
+            'checklist'=>[],
             'updated_at'=>$note->updated_at,
             'created_at'=>$note->created_at
         );
-        return $arrayName;
+     
        return response()->json($arrayName, 201);
 
     }

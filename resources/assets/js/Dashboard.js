@@ -75,14 +75,14 @@ class Dashboard extends React.Component{
   }
 
 
-  addnote(title,data,checked){
+  addnote(title,data,checked,checklist){
     var that=this;
-    checked = checked || false;
+  
     axios.post('http://localhost/api/notes/', {
       "title":title,
       "data":data,
-      "is_checklist":0, 
-      "checklist":[]
+      "is_checklist":checked, 
+      "checklist":checklist
     })
     .then(function (response) {
       console.log('resp',response.data);

@@ -35,7 +35,7 @@ class CreateNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: '',
+            title:'Title',
             data: 'Write a note',
             done:this.props.click,
             checkdata:"",
@@ -57,36 +57,13 @@ class CreateNote extends Component {
     updateCheckStatus(key){
         console.log(key);
         --key;
-        console.log(this.state.checklist[key].checked);
-        // this.setState(
-        //     {...this.state,
-        //         checklist:[...this.state.checklist,...this.state.checklist.map(check=>{
-        //             if(check.id==key){
-        //                 return{
-        //                     ...check,
-        //                     checked:!check.checked,
-                            
-        //                 }
-
-        //             }
-        //             else{
-        //                 return check
-        //             }
-        //         })]
-
-
-            
-        //     }
-        // );
-            this.state.checklist[key].checked=!this.state.checklist[key].checked;
-
+        console.log(this.state.checklist[key].is_checked);
+        this.state.checklist[key].checked=!this.state.checklist[key].is_checked;
         this.forceUpdate()
-
         console.log(this.state.checklist[key]);
     }
 
-    handleSubmit(event){
-                 
+    handleSubmit(event){    
         this.props.ToggleCreateCheckedNote(this.state.title,this.state.checklist);
         this.setState({title:"",data:"Write a note"});
         this.setState({checklist:[],checkdata:""});
@@ -111,15 +88,10 @@ class CreateNote extends Component {
 
 
       _handleEnter(e){
-        if (e.key === 'Enter') {
-            // this.setState({
-            //     checkdata: e.target.value,
-            //   });
-
-              var data={
-                  id:this.state.checklist.length + 1,
-                  checkdata:e.target.value,
-                  checked:false
+        if (e.key === 'Enter' && e.target.value != '')  {
+             var data={
+                  "label":e.target.value,
+                  "is_checked":false
               }
             this.state.checklist.push(data);
             console.log(data);
@@ -174,11 +146,11 @@ class CreateNote extends Component {
 
                          />
                         </div>
-                        {this.state.checklist.map(data => (
+                        {this.state.checklist.map((data,i) => (
     
-                            <CheckListNote key={data.id} id={data.id} 
-                                            label={data.checkdata} 
-                                            checked={data.checked} 
+                            <CheckListNote key={i} id={data.id} 
+                                            label={data.label} 
+                                            checked={data.is_checked} 
                                             update={this.updateCheckStatus.bind(this)}/>
                         ))}
                     

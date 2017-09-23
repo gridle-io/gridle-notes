@@ -19,8 +19,6 @@ constructor(props) {
     this.handleDelete=this.handleDelete.bind(this);
   }
  
-
-
   editNote(key){
    console.log(key);
    this.props.edit(key);
@@ -51,16 +49,15 @@ constructor(props) {
                     children={
                         <div className="note" onClick={event=> {this.editNote(note.id)}}>
                           <div className="note-data" >
-                            
-                              {note.title=="Title" || note.title=="" ? '':
+                             {note.title=="Title" || note.title=="" ? '':
                                 <h3 >{note.title}</h3>
                               }
                     
-                              {note.checked  ?
+                              {note.is_checklist  ?
                                   <div className="list"> 
-                                    {note.data.map(checklist => (
+                                    {note.checklist.map((checklist,i )=> (
                         
-                                                <CheckListNote key={checklist.id} label={checklist.checkdata} checked={checklist.checked} />
+                                                <CheckListNote key={i} label={checklist.label} checked={checklist.is_checked ? true :false} />
                                             ))}
                                   </div>
                                   : //else
