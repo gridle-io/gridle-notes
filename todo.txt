@@ -24,6 +24,11 @@ data -> formate 2
 {
 	"title":"sdsdsds",
 	"data":"",
-	"is_checklist":1,
+	"is_checklist":0,
     "checklist":[]
 }
+
+paste this inside update function in the note controller
+$note->update($request->all());
+
+        return response()->json($note, 200);

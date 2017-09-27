@@ -44,6 +44,7 @@ export default class EditNote extends React.Component {
   
     constructor(props) {
       console.log("hi from e",props);
+      //var_dump("INSIDE");die;
       super(props);
       this.state = {
           title: props.note.title,
@@ -72,9 +73,9 @@ export default class EditNote extends React.Component {
 handleSubmit(event){
              
                     this.props.ToggleCreateNote(this.state.title,this.state.data);
-                    this.setState({title:"Title",data:""})
-                    this.setState({done: true})
-                    this.setState({firstTimeFocus: false})
+                    this.setState({title:"Title",data:""});
+                    this.setState({done: true});
+                    this.setState({firstTimeFocus: false});
                     console.log(this.state);
 
 

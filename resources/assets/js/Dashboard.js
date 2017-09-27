@@ -25,7 +25,7 @@ class Dashboard extends React.Component{
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
     this.openEditPopup=this.openEditPopup.bind(this);
-    this.editNote=this.editNote.bind(this);
+    this.EditNote=this.EditNote.bind(this);
     
   }
   componentDidMount() {
@@ -44,7 +44,7 @@ class Dashboard extends React.Component{
   }
 
 
-  editNote(props){
+  EditNote(props){
    
     console.log("dsds",props);
     var notes=this.state.notes;
@@ -66,6 +66,7 @@ class Dashboard extends React.Component{
   }
   deleteNote(props){
     var arr=this.state.notes;
+
     arr = arr.filter(item => item.note_id !== props);
     this.setState({notes:arr});
     console.log(arr);
@@ -97,14 +98,14 @@ class Dashboard extends React.Component{
       console.log(error);
     });
   }
-  render (){
+  render (){ //or ReactDOM.render()
 
     return(
       <div className="main-area">
         
         <EditNote  note={this.state.editablenote} open={this.state.isopenEditpopup} openEdit={this.openEditPopup.bind(this)}/>
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.editNote.bind(this)}/>
+          <Note notes={this.state.notes} delete={(value)=>{this.deleteNote(this)}} edit={this.EditNote.bind(this)}/>
         </div>
 
 

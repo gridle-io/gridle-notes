@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
   
-class Note extends Component{
+class Note extends Component {
 
 
 constructor(props) {
@@ -19,21 +19,23 @@ constructor(props) {
     this.handleDelete=this.handleDelete.bind(this);
   }
  
-  editNote(key){
+  EditNote(key){
+    //var_dump("WE ARE INSIDE THE EditNote METHOD IN NOTE.JS ");die;
    console.log(key);
    this.props.edit(key);
+//   axios.update('http://localhost/api/notes/{id}'+props );
    
   }
   handleDelete(props){
-
+    //var_dump("handleDelete");die;
     console.log("delete from note");
 
     console.log(this.props);
     // console.log(props);
-    this.props.delete(props);
+    this.props.delete(this.props);
   }
 
-  render(){
+  render(){ //or ReactDOM.render()
   
   console.log('notes',this.props.notes);
   return(
@@ -47,8 +49,8 @@ constructor(props) {
                   
                     zDepth={this.state.shadow} 
                     children={
-                        <div className="note" onClick={event=> {this.editNote(note.id)}}>
-                          <div className="note-data" >
+                        <div className="note" >
+                          <div className="note-data" onClick={event=> {this.EditNote(note.id)}}>
                              {note.title=="Title" || note.title=="" ? '':
                                 <h3 >{note.title}</h3>
                               }
@@ -66,7 +68,7 @@ constructor(props) {
         
                           </div>
                           {/* <button onClick={this.handleClick.bind(this)}>Click me</button> */}
-                          <NoteMenu delete={this.handleDelete.bind(this)} id={note.note_id}/>
+                          <NoteMenu delete={this.handleDelete.bind(this)} id={note.id}/>
                         </div>
                     }
               />

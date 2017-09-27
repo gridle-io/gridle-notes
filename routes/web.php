@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index'); //returns index.blade.php
 });
