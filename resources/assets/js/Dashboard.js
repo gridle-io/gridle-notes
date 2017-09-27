@@ -65,12 +65,15 @@ class Dashboard extends React.Component{
  
   }
   deleteNote(props){
-    var arr=this.state.notes;
 
-    arr = arr.filter(item => item.note_id !== props);
+    
+    var arr=this.state.notes;
+    
+    console.log("dashboqard",arr);
+    arr = arr.filter(item => item.id !== props);
     this.setState({notes:arr});
     console.log(arr);
-    console.log('delete this note -->>>>>>',props);
+
     axios.delete('http://localhost/api/notes/'+props );
      
   }
@@ -78,7 +81,7 @@ class Dashboard extends React.Component{
 
   addnote(title,data,checked,checklist){
     var that=this;
-  
+  if(data||checklist){
     axios.post('http://localhost/api/notes/', {
       "title":title,
       "data":data,
@@ -96,7 +99,7 @@ class Dashboard extends React.Component{
     })
     .catch(function (error) {
       console.log(error);
-    });
+    });}
   }
   render (){ //or ReactDOM.render()
 
@@ -105,7 +108,7 @@ class Dashboard extends React.Component{
         
         <EditNote  note={this.state.editablenote} open={this.state.isopenEditpopup} openEdit={this.openEditPopup.bind(this)}/>
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={(value)=>{this.deleteNote(this)}} edit={this.EditNote.bind(this)}/>
+          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.EditNote.bind(this)}/>
         </div>
 
 

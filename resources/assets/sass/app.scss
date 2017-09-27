@@ -127,20 +127,17 @@ html {
               margin:0 10px
             }
           }
-          .create-checked{
-
-            width: 100%;
-            font-size: 14px;
-            text-align: left;
-            margin: 10px 0 0 10px;
-            padding: 0;
-
-          }
+          
           .create-note-bottom{
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
+          }
+          .create-checked{
+            p{
+              padding: 0;
+            }
           }
         }
                                                     
@@ -207,6 +204,12 @@ html {
           padding-left: 16px;
           font-weight: 100;
         }
+        .create-checked{
+          p{
+            padding: 0;
+            font-size: 16px;
+          }
+        }
         
       }
       .bottom-menu{
@@ -217,3 +220,17 @@ html {
 
   }
     }
+
+    .checkbox{}
+
+    .create-checked{
+      
+                  width: 100%;
+                  font-size: 14px;
+                  text-align: left;
+                  margin: 10px 0 0 10px;
+                  padding: 0;
+                  display: flex
+
+      
+                }

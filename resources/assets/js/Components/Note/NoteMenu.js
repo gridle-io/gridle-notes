@@ -22,7 +22,7 @@ export default class NoteManu extends Component {
 
 
 handleClick(){
- console.log("called from note menu");
+ console.log("called from note menu",this.props.id);
  this.props.delete(this.props.id);
 }
 

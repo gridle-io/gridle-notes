@@ -12,8 +12,11 @@ const styles = {
    
     checkbox: {
       marginBottom: 0,
+
     },icon  :{
-        marginRight:8
+        marginRight:0,
+        height:16,
+        width:16
         
 
     },label:{
@@ -29,14 +32,15 @@ const styles = {
       constructor(props){
         super(props)
         this.state = {
-            checked: this.props.checked,
+            is_checked: this.props.is_checked,
             label:this.props.label
           }
       }
     
     
     updateCheck() {
-      // console.log(this.props.id);
+      console.log('ids',this.props.id);
+      console.log("props", this.props);
       // this.setState({checked: !this.state.checked});
       this.props.update(this.props.id);
     }
@@ -44,18 +48,23 @@ const styles = {
     render() {
       return (
         <div className="create-checked">
-        <Checkbox
-            label={this.state.label}
-            checked={this.props.checked}
-            onCheck={this.updateCheck.bind(this)}
-            style={styles.checkbox}
-            iconStyle={styles.icon}
-            labelStyle={{textDecoration:
-              !this.props.checked ? "none":"line-through"
+          <Checkbox
+             className="checkbox"
+              checked={this.props.is_checked}
+              onCheck={this.updateCheck.bind(this)}
+              style={{
+              width: '5%',
+              margin: '0'
             }}
-          />
+          
+              iconStyle={styles.icon}
+              
+            />
+            <p style={{textDecoration:
+                !this.props.is_checked ? "none" : "line-through"
+              }}>{this.props.label}</p>
 
-          </div>
+        </div>
         )
     }
 }  

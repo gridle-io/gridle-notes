@@ -20,22 +20,25 @@ constructor(props) {
   }
  
   EditNote(key){
-    //var_dump("WE ARE INSIDE THE EditNote METHOD IN NOTE.JS ");die;
+
    console.log(key);
    this.props.edit(key);
 //   axios.update('http://localhost/api/notes/{id}'+props );
    
   }
   handleDelete(props){
-    //var_dump("handleDelete");die;
-    console.log("delete from note");
 
-    console.log(this.props);
-    // console.log(props);
-    this.props.delete(this.props);
+    console.log("delete from note" ,props);
+
+  
+  
+    this.props.delete(props);
   }
 
-  render(){ //or ReactDOM.render()
+  handleCheck(){
+
+  }
+  render(){ 
   
   console.log('notes',this.props.notes);
   return(
@@ -50,7 +53,7 @@ constructor(props) {
                     zDepth={this.state.shadow} 
                     children={
                         <div className="note" >
-                          <div className="note-data" onClick={event=> {this.EditNote(note.id)}}>
+                          <div className="note-data" >
                              {note.title=="Title" || note.title=="" ? '':
                                 <h3 >{note.title}</h3>
                               }
@@ -59,7 +62,7 @@ constructor(props) {
                                   <div className="list"> 
                                     {note.checklist.map((checklist,i )=> (
                         
-                                                <CheckListNote key={i} label={checklist.label} checked={checklist.is_checked ? true :false} />
+                                                <CheckListNote key={i} label={checklist.label} is_checked={checklist.is_checked ? true :false} handlecheck={this.handleCheck.bind(this)} />
                                             ))}
                                   </div>
                                   : //else

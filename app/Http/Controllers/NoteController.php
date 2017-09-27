@@ -19,56 +19,30 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
-        ///print_r("inside store");
-        //var_dump('storeMethod');die;
-        
+
+        $checklists = [];
         $requestData = $request->all();
+        // return $requestData;
         
-        
-        //print_r("store after json_encode requestData");
-        $note = Note::create($requestData); //requestData is an array???
-        //return json_encode($requestData);
-      //print_r("store after note::create ");
+        $note = Note::create($requestData); 
         if ($requestData["is_checklist"]==1) {
 
-                $note = Note::find($note->id); //what does find($note->id) do? why not simply use $note_id or $id instead of $note->id??
-                // $checkbox = ["label"=>"ssdsd"];
-
-               foreach ($requestData["checklist"] as $checkbox) { //see php foreach explanation $checkbox is $value which we require from the array of $requestData
-                               
+                // $note = Note::find($note->id); 
+            foreach ($requestData["checklist"] as $checkbox) {
+                $newChecklist = new checklist(["label"=>$checkbox["label"],"is_checked"=>$checkbox["is_checked"]]) ;           
+                array_push($checklists, $newChecklist);
                 $note->checklist()->save(
-                    new checklist(["label"=>$checkbox["label"],"is_checked"=>$checkbox["is_checked"]]) // an object is created here
+                    $newChecklist
                 );
             }
-
         }
-        //return $note; //remove
-        // print_r("store after if condition");
-        $queryResult = Note::find($note->id)->with('checklist')->get(); // CORRECT THIS USING JOIN
-        // print_r("store after queryResult");
-        // $queryResult= DB::table('notes')
-        // ->join('checklist','id') 
-
-        // return data response to the frond-end
-        //return $queryResult;
-        // $arrayName = array(
-        //     'note_id'=>$note->id,
-        //     'title'=>$note->title,
-        //     'data'=>$note->data,                        //why create this array
-        //     'is_checklist'=>$note->is_checklist,
-        //     'checklist'=>[],
-        //     'updated_at'=>$note->updated_at,
-        //     'created_at'=>$note->created_at
-        // );
-       return response()->json($queryResult, 201); 
-       return json_encode($requestData);
-       //print_r("store after response");      
-       /*why simply $requestData cant be returned 
-       to the database?? = we need checklist table for corresponding note_id.
-       
-       JSON Responses
-The json method will automatically set the Content-Type header to application/json, as well as convert the given array to JSON using the json_encode PHP function*/
-
+        // return $note;
+        // $/queryResult = Note::find($note->id)->with('checklist')->get(); 
+        $note->checklist = $checklists;
+        $response = $note;
+        
+       return response()->json($response, 201); 
+    
     }
    // public function edit($request, $id)
    //  {
