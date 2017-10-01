@@ -18,6 +18,6 @@ class Note extends Model
    
      public function checklist()
 	  {
-	    return $this->hasMany('App\checklist');
+	    return $this->hasMany('App\Checklist');
 	  }
 }

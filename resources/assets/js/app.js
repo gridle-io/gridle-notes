@@ -27,17 +27,29 @@ const muiTheme = getMuiTheme({
 });
 
 
-const App = () => (
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <div>
-      <Header />
-      <div className="main-container">
-          <DrawerLeft  />
-          <Dashboard />
-      </div>
-    </div>
-  </MuiThemeProvider>
-);
+class App extends Component{
+  constructor(props){
+    super(props)
+    this.state={
+      processing:false
+    }
+
+  }
+  render(){
+    return(
+
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <Header processing={this.state.processing} />
+          <div className="main-container">
+              <DrawerLeft  />
+              <Dashboard />
+          </div>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
  
 ReactDOM.render(
   <App />,

@@ -31,12 +31,17 @@ const styles = {
             is_checked: this.props.is_checked,
             label:this.props.label
           }
+          this.updateLabel=this.updateLabel.bind(this);
       }
      updateCheck() {
       console.log('ids',this.props.id);
-      console.log("props", this.props);
+    //   console.log("props", this.props);
       // this.setState({is_checked: !this.state.is_checked});
-      this.props.update(this.props.id);
+      this.props.update(this.props.id ,this.props.note_id);
+    }
+    updateLabel(){
+      this.props.updateLabel(this.props.id,this.props.note_id);
+      console.log("clicked",this.props.id,this.props.note_id);
     }
     render() {
       return (
@@ -52,7 +57,7 @@ const styles = {
               iconStyle={styles.icon}/>
             <p style={{textDecoration:
                 !this.props.is_checked ? "none" : "line-through"
-              }}>{this.props.label}</p>
+              }} onClick={this.updateLabel.bind(this)}>{this.props.label}</p>
 
         </div>
         )

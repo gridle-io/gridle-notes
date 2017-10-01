@@ -28,10 +28,10 @@ toggleDrawer() {
         d.style.marginLeft = '0';
         this.setState({open:true});
         console.log(this.state);
-}
-
-
     }
+
+
+}
 
   
 
@@ -42,7 +42,7 @@ render (){
   return(
         <AppBar
         title="Keep Plugin"
-        children={<HeaderMenu />}
+        children={<HeaderMenu processing={this.props.processing}/>}
         onLeftIconButtonTouchTap={this.toggleDrawer.bind(this)} 
                 />);
 

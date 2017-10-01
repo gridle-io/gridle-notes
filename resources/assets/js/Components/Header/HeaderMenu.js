@@ -12,18 +12,16 @@ import CloudDone from 'material-ui/svg-icons/file/cloud-done';
 import ProfileMenu from './ProfileMenu';
 import CircularProgress from 'material-ui/CircularProgress';
 
-const CircularProgressExampleSimple = () => (
-  <div>
-    <CircularProgress />
-    <CircularProgress size={60} thickness={7} />
-    <CircularProgress size={80} thickness={5} />
-  </div>
-);
 
 
 
 
 export default class HeaderMenu extends Component {
+    constructor(props){
+        super(props);
+
+        
+    }
 
     render(){
         return(
@@ -33,7 +31,7 @@ export default class HeaderMenu extends Component {
                 <IconButton tooltip="Synchronized" >
                         <CloudDone />
                         </IconButton>
-                <IconButton tooltip="Synchrinizng" >
+                <IconButton tooltip="Synchrinizng">
                         <CircularProgress size={25} thickness={3} color="#000"/>
                         </IconButton>
                     <IconButton tooltip="Refresh" >

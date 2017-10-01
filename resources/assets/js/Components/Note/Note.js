@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 
 import NoteMenu from './NoteMenu';
-import CheckListNote from '../Card/checkbox';
+import CheckListNote from './checkbox';
 import axios from 'axios';
 
 
@@ -17,30 +17,42 @@ constructor(props) {
       notes:this.props.notes,
     }
     this.handleDelete=this.handleDelete.bind(this);
+    this.handleCheck=this.handleCheck.bind(this);
+    // this.editChecklist=this.editChecklist.bind(this); 
   }
- 
-  EditNote(key){
+ editTitle(key){
+   this.props.edit(key,"title");
+ }
+  editNoteData(key){
 
    console.log(key);
-   this.props.edit(key);
+   this.props.edit(key,"data");
 //   axios.update('http://localhost/api/notes/{id}'+props );
    
   }
   handleDelete(props){
 
     console.log("delete from note" ,props);
-
-  
-  
     this.props.delete(props);
   }
 
-  handleCheck(){
-
+  handleCheck(checkbox_id,note_id){
+    
+    console.log("checkbox ",checkbox_id);
+    console.log("checkbox note ",note_id);
+    this.props.handleCheck  (checkbox_id,note_id);
+ 
   }
+  editChecklist(checkbox_id,note_id){
+    console.log(checkbox_id,note_id);
+    this.props.edit(note_id)
+    console.log("this is editing of checked notes ")
+  }
+
+  
   render(){ 
   
-  console.log('notes',this.props.notes);
+ 
   return(
 
     <div className="note-list">
@@ -55,18 +67,26 @@ constructor(props) {
                         <div className="note" >
                           <div className="note-data" >
                              {note.title=="Title" || note.title=="" ? '':
-                                <h3 >{note.title}</h3>
+                                <h3 onClick={event=> {this.editTitle(note.id)}}>{note.title}</h3>
                               }
                     
                               {note.is_checklist  ?
                                   <div className="list"> 
+                                 {console.log('from note js ',  note.checklist)}
                                     {note.checklist.map((checklist,i )=> (
-                        
-                                                <CheckListNote key={i} label={checklist.label} is_checked={checklist.is_checked ? true :false} handlecheck={this.handleCheck.bind(this)} />
+                                                  
+                                                <CheckListNote 
+                                                  key={i} 
+                                                  id={checklist.id}
+                                                  label={checklist.label}
+                                                  note_id={checklist.note_id} 
+                                                  is_checked={checklist.is_checked ? true :false} 
+                                                  update={this.handleCheck.bind(this)} 
+                                                  updateLabel={this.editChecklist.bind(this)}/>
                                             ))}
                                   </div>
                                   : //else
-                                  <p>{note.data}</p>
+                                  <p onClick={event=> {this.editNoteData(note.id)}}>{note.data}</p>
                               } 
         
                           </div>

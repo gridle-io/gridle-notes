@@ -33,9 +33,9 @@ export default class Card extends Component {
 
   ToggleCreateNote(title, data) {
 
-    checklist:[];
+
     console.log(data);
-    if (title || data) {
+    if (data) {
       this.props.addnote(title, data,0,[]);
     }
     this.setState({
@@ -45,7 +45,7 @@ export default class Card extends Component {
   }
   ToggleCreateCheckedNote(title, checklist) {
 
-    if (title || checklist.length) {
+    if (checklist.length) {
       
       console.log('checklist from card',checklist);
       this.props.addnote(title,'', 1, checklist);

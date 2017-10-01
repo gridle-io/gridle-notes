@@ -20,13 +20,15 @@ class Dashboard extends React.Component{
     this.state = {
             notes:[],
             isopenEditpopup:false,     
-            editablenote: [],   
+            editablenote: [], 
+            processing:false
     };
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
     this.openEditPopup=this.openEditPopup.bind(this);
-    this.EditNote=this.EditNote.bind(this);
-    
+    this.editNote=this.editNote.bind(this);
+    this.submitEditedNote=this.submitEditedNote.bind(this);    
+    this.handleCheck=this.handleCheck.bind(this);
   }
   componentDidMount() {
     console.log("mounted");
@@ -37,15 +39,43 @@ class Dashboard extends React.Component{
       });
   }
 
+
+  addnote(title,data,checked,checklist){
+    var that=this;
+    if(data!=null||checklist.isnotEnpty()){
+      axios.post('http://localhost/api/notes/', {
+        "title":title,
+        "data":data,
+        "is_checklist":checked, 
+        "checklist":checklist
+    })
+    .then(function (response) {
+      console.log('resp',response.data);
+      let notearrr =that.state.notes;
+      console.log(notearrr);
+      notearrr.push(response.data);
+      // console.log(notearrr);
+      that.setState({ notes:notearrr });
+      // this.setState({notes:this.state.notes.push()})
+    })
+    .catch(function (error) {
+      console.log(error);
+    });}
+  }
   openEditPopup(){
     this.setState({isopenEditpopup:!this.state.isopenEditpopup});
-    console.log('opning,,,,edit',this.state.isopenEditpopup);
- 
   }
 
-
-  EditNote(props){
-   
+  submitEditedNote(editedNote){
+    this.setState({processing:true})
+    axios.put('http://localhost/api/notes/'+editedNote.id,editedNote).then(function(response){
+    if(response.status=200){
+      console.log("done successs fullly");
+    }
+    });
+    console.log('dashboard after edit',this.state.notes);
+  }
+  editNote(props){
     console.log("dsds",props);
     var notes=this.state.notes;
     var note=notes.filter(function(item)
@@ -56,7 +86,7 @@ class Dashboard extends React.Component{
       });
 
       console.log("selected note",note);
-      console.log(this);
+      // console.log(this);
 
       this.setState({editablenote:note[0]});
       console.log("editable note",this.state.editablenote);
@@ -78,37 +108,58 @@ class Dashboard extends React.Component{
      
   }
 
+  handleCheck(checkbox_id,note_id){
+    console.log("props of handle check",checkbox_id,note_id);
+      var notes=this.state.notes;
+      console.log('ds',notes);
+      notes = notes.map((note)=>{
+            if(note.id==note_id){
+                  note.checklist= note.checklist.map((checkbox)=>{
+                  if(checkbox.id==checkbox_id){
+                    checkbox.is_checked=!checkbox.is_checked;
+                    return checkbox;
+                  }
+                  else {
+                    return checkbox;
+                  }
+                });
+                axios.put('http://localhost/api/notes/'+note.id,note).then(function(response){
+                  if(response.status=200){
+                    console.log("done successs fullly");
+                  }
+                });
+                return note;
+            }
+            else {
+              return note;
 
-  addnote(title,data,checked,checklist){
-    var that=this;
-  if(data||checklist){
-    axios.post('http://localhost/api/notes/', {
-      "title":title,
-      "data":data,
-      "is_checklist":checked, 
-      "checklist":checklist
-    })
-    .then(function (response) {
-      console.log('resp',response.data);
-      let notearrr =that.state.notes;
-      console.log(notearrr);
-      notearrr.push(response.data);
-      // console.log(notearrr);
-      that.setState({ notes:notearrr });
-      // this.setState({notes:this.state.notes.push()})
-    })
-    .catch(function (error) {
-      console.log(error);
-    });}
+            }
+      
+      });
+    console.log('after process result',notes);
+    this.setState({notes:notes});
+
+  // // }});  
   }
+
+ 
   render (){ //or ReactDOM.render()
 
     return(
       <div className="main-area">
         
-        <EditNote  note={this.state.editablenote} open={this.state.isopenEditpopup} openEdit={this.openEditPopup.bind(this)}/>
+        <EditNote  
+            note={this.state.editablenote} 
+            open={this.state.isopenEditpopup} 
+            openEdit={this.openEditPopup.bind(this)}
+            submitEditedNote={this.submitEditedNote.bind(this)}
+            handleCheck={this.handleCheck.bind(this)}/>
           <Card addnote={this.addnote.bind(this)}/>
-          <Note notes={this.state.notes} delete={this.deleteNote.bind(this)} edit={this.EditNote.bind(this)}/>
+          <Note 
+            notes={this.state.notes} 
+            delete={this.deleteNote.bind(this)} 
+            edit={this.editNote.bind(this)}
+            handleCheck={this.handleCheck.bind(this)}/>
         </div>
 
 
