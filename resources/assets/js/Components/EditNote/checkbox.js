@@ -33,11 +33,13 @@ const styles = {
           }
           this.editLabel=this.editLabel.bind(this);
           this.dataChanged = this.dataChanged.bind(this);
+          this.deleteCheckbox=this.deleteCheckbox.bind(this);
       }
 
+      deleteCheckbox(){
+        console.log("Delete checkbox called");
+      }
       dataChanged(label ) {
-        // data = { description: "New validated text comes here" } 
-        // Update your model from here 
         console.log(label)
         this.setState({...label})
         this.props.handleLabelChange(label, this.props.id);
@@ -48,12 +50,12 @@ const styles = {
     }
     
     editLabel(){
-      // this.props.updateLabel(this.props.id,this.props.note_id);
       console.log("clicked",this.props.id,this.props.note_id);
     }
     render() {
       return (
-        <div className="create-checked">
+        <div className="create-checked edit-checkbox">
+          <div className="checkbox-label">
           <Checkbox
              className="checkbox"
               checked={this.props.is_checked}
@@ -63,29 +65,31 @@ const styles = {
                 margin: '0'
               }}
               iconStyle={styles.icon}/>
-            {/* <p style={{textDecoration:
-                !this.props.is_checked ? "none" : "line-through"
-              }} onClick={this.editLabel.bind(this)}>{this.props.label}</p> */}
+          
               <InlineEdit
              
-              activeClassName="editing"
-              text={this.state.label}
-              paramName="label"
-              change={this.dataChanged}
-              style={{
-               
-                minWidth: 150,
-                display: 'inline-block',
-                margin: 0,
-                padding: 0,
-                fontSize: 15,
-                outline: 0,
-                border: 0
-              }}
-              style={{textDecoration:
-                !this.props.is_checked ? "none" : "line-through"
-              }}
-            />
+                activeClassName="editing"
+                text={this.state.label}
+                paramName="label"
+                change={this.dataChanged}
+                style={{
+                
+                  maxWidth: 100,
+                  display: 'inline-block',
+                  margin: 0,
+                  padding: 0,
+                  fontSize: 15,
+                  outline: 0,
+                  border: 0
+                }}
+                style={{textDecoration:
+                  !this.props.is_checked ? "none" : "line-through"
+                }}
+              />
+              </div>
+              <div className="delete-checkbox"> 
+                <span className="btn" onClick={this.deleteCheckbox.bind(this)}>X</span>
+              </div>
               
 
         </div>

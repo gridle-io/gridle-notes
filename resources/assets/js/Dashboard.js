@@ -5,11 +5,7 @@ import Note from './Components/Note/Note';
 
 import EditNote from './Components/EditNote/EditNote';
 import axios from 'axios';
-
-
-
-
-
+import clone from 'clone';
 
 class Dashboard extends React.Component{
   
@@ -51,11 +47,11 @@ class Dashboard extends React.Component{
     })
     .then(function (response) {
       console.log('resp',response.data);
-      let notearrr =that.state.notes;
-      console.log(notearrr);
-      notearrr.push(response.data);
+      let notearr =that.state.notes;
+      console.log(notearr);
+      notearr.push(response.data);
       // console.log(notearrr);
-      that.setState({ notes:notearrr });
+      that.setState({ notes:notearr});
       // this.setState({notes:this.state.notes.push()})
     })
     .catch(function (error) {
@@ -67,36 +63,44 @@ class Dashboard extends React.Component{
   }
 
   submitEditedNote(editedNote){
+    console.log("Edited notesss",editedNote);
+    let notes=this.state.notes;
+    notes=notes.map((note)=>{
+      if(note.id == editedNote.id){
+        return editedNote;
+      }
+      else{
+        return note;
+      }
+    });
+
+this.setState({notes:notes});
     this.setState({processing:true})
     axios.put('http://localhost/api/notes/'+editedNote.id,editedNote).then(function(response){
     if(response.status=200){
+
+      
       console.log("done successs fullly");
     }
     });
-    console.log('dashboard after edit',this.state.notes);
+
   }
   editNote(props){
-    console.log("dsds",props);
-    var notes=this.state.notes;
+    let notes=clone(this.state.notes);
+
     var note=notes.filter(function(item)
       {
         if(item.id == props){
           { return item};
         }
       });
-
-      console.log("selected note",note);
-      // console.log(this);
-
-      this.setState({editablenote:note[0]});
-      console.log("editable note",this.state.editablenote);
-      
-      this.openEditPopup();
- 
-  }
-  deleteNote(props){
-
     
+      
+      this.setState({editablenote:Object.assign({},note[0])});
+    
+      this.openEditPopup();
+  }
+  deleteNote(props){    
     var arr=this.state.notes;
     
     console.log("dashboqard",arr);
@@ -110,9 +114,9 @@ class Dashboard extends React.Component{
 
   handleCheck(checkbox_id,note_id){
     console.log("props of handle check",checkbox_id,note_id);
-      var notes=this.state.notes;
-      console.log('ds',notes);
-      notes = notes.map((note)=>{
+     
+    
+      let notes = this.state.notes.map((note)=>{
             if(note.id==note_id){
                   note.checklist= note.checklist.map((checkbox)=>{
                   if(checkbox.id==checkbox_id){
@@ -136,14 +140,11 @@ class Dashboard extends React.Component{
             }
       
       });
-    console.log('after process result',notes);
     this.setState({notes:notes});
-
-  // // }});  
   }
 
  
-  render (){ //or ReactDOM.render()
+  render (){ 
 
     return(
       <div className="main-area">
@@ -153,7 +154,7 @@ class Dashboard extends React.Component{
             open={this.state.isopenEditpopup} 
             openEdit={this.openEditPopup.bind(this)}
             submitEditedNote={this.submitEditedNote.bind(this)}
-            handleCheck={this.handleCheck.bind(this)}/>
+            />
           <Card addnote={this.addnote.bind(this)}/>
           <Note 
             notes={this.state.notes} 

@@ -16,6 +16,9 @@ from 'material-ui/styles/colors';
 
 
 const styles={
+ dialogStyle:{
+width:500,
+ },
   buttonstyle :{
       margin: 12,
   },
@@ -46,7 +49,7 @@ export default class EditNote extends React.Component {
           is_checklist:props.note.is_checklist,
           checklist:props.note.checklist,
           firstTimeFocus: false,
-          note:props.note
+          note:props.note,
       };
 
       this.handleClose=this.handleClose.bind(this);
@@ -67,7 +70,7 @@ export default class EditNote extends React.Component {
 
 
 handleSubmit(event){
-  this.props.openEdit();
+ 
 
   console.log("called form edit note");
   let editedNote=this.state.note;
@@ -75,6 +78,7 @@ handleSubmit(event){
   editedNote.data=this.state.data;
   editedNote.checklist=this.state.checklist;
   this.props.submitEditedNote(editedNote);
+  this.props.openEdit();
   
 
 
@@ -90,31 +94,52 @@ handleDataChange(evt){
 }
 
 handleLabelChange(label,id){
-  var checklist=this.state.checklist;
-  checklist= checklist.map((checkbox)=>{
+  
+   var checklist= Object.assign([],this.state.checklist); 
+   console.log("handle label",checklist);
+   checklist=checklist.map((checkbox)=>{
     if(checkbox.id==id){
       checkbox.label=label.label;
+      console.log("changed" ,checkbox);
       return checkbox;
-      console.log("cahnged" ,checkbox);
     }
     else {
       return checkbox;
     }});
-
+    this.setState({checklist:checklist});
     console.log("after change in checklist",checklist);
   console.log('label to be changed',label,id);
-  // this.setState({ data: evt.target.value });
+
 }
 
 handleCheck(checkbox_id,note_id){
   
   console.log("checkbox ",checkbox_id);
   console.log("checkbox note ",note_id);
-  this.props.handleCheck  (checkbox_id,note_id);
+  console.log("qqqqq ",this.state);
+  let checklist=Object.assign([],this.state.checklist);
+  checklist=checklist.map((checkbox)=>{
+    
+    if(checkbox.id==checkbox_id){
+      checkbox.is_checked=!checkbox.is_checked;
+      return checkbox;
+    }
+    else {
+      return checkbox;
+    }
+  });
+  console.log("after change",checklist);
+  console.log("asdasd",this.state);
+
+
+ this.setState({checklist:checklist});
+ 
 
 }
   handleClose(){
-    console.log("called form edit note");
+
+    
+    console.log("called form edit note",this.state);
     this.props.openEdit();
   }
 
@@ -142,7 +167,7 @@ handleCheck(checkbox_id,note_id){
     const actions = [
       <div className="create-note-bottom">
       
-      <NoteMenu />
+      {/* <NoteMenu /> */}
                    
       <FlatButton
         label="Cancel"
@@ -156,7 +181,7 @@ handleCheck(checkbox_id,note_id){
         onClick={this.handleSubmit}
       />
       
-                </div>
+    </div>
       
     ];
     
@@ -167,6 +192,7 @@ handleCheck(checkbox_id,note_id){
           actions={actions}
           modal={false}
           open={this.props.open}
+          contentStyle={styles.dialogStyle}
           onRequestClose={this.handleClose}
         >
           <h3>
@@ -187,7 +213,7 @@ handleCheck(checkbox_id,note_id){
 
           {this.state.is_checklist ? 
             <div className="list"> 
-            {this.state.note.checklist.map((checklist,i )=> (
+            {this.state.checklist.map((checklist,i )=> (
                                                   
                           <CheckListNote 
                             key={i} 
