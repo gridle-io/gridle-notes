@@ -11,6 +11,7 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import {White,red500,grey300,grey200,grey500,Black}
 from 'material-ui/styles/colors';
+import axios from 'axios';
 
 
 
@@ -59,9 +60,20 @@ export default class EditNote extends React.Component {
       this.handleDataChange=this.handleDataChange.bind(this);
       this.handleSubmit=this.handleSubmit.bind(this);
       this.handleTitleChange=this.handleTitleChange.bind(this);
+      this.deletecheckbox=this.deletecheckbox.bind(this);
       
   }
+deletecheckbox(id){
+  axios.delete('http://localhost/api/checkbox/'+id );  
+  var arr=this.state.checklist;
+  
+  console.log("dashboqard",arr);
+  arr = arr.filter(item => item.id !== id);
+  this.setState({checklist:arr});
+  console.log(arr);
 
+   
+}
 
 
   focus() {
@@ -217,6 +229,7 @@ handleCheck(checkbox_id,note_id){
                                                   
                           <CheckListNote 
                             key={i} 
+                            delete={this.deletecheckbox.bind(this)}
                             id={checklist.id}
                             label={checklist.label}
                             note_id={checklist.note_id} 

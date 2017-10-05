@@ -4,8 +4,10 @@ import Card  from './Components/Card/Card';
 import Note from './Components/Note/Note';
 
 import EditNote from './Components/EditNote/EditNote';
+import LoginPopup from './Components/Login/LoginPopup';
 import axios from 'axios';
 import clone from 'clone';
+
 
 class Dashboard extends React.Component{
   
@@ -148,7 +150,7 @@ this.setState({notes:notes});
 
     return(
       <div className="main-area">
-        
+        <LoginPopup />
         <EditNote  
             note={this.state.editablenote} 
             open={this.state.isopenEditpopup} 

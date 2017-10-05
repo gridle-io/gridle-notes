@@ -18,9 +18,11 @@ use App\Note;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('register', 'UserController@register');
 Route::get('notes', 'NoteController@index');
 Route::get('notes/{note}', 'NoteController@show');
 Route::post('notes', 'NoteController@store');
-// Route::get('notes/{id}','NoteController@edit');
+
 Route::put('notes/{id}', 'NoteController@update');
 Route::delete('notes/{id}', 'NoteController@delete');
+Route::delete('checkbox/{id}', 'ChecklistController@delete');

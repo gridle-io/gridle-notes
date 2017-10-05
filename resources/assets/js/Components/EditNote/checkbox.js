@@ -37,6 +37,7 @@ const styles = {
       }
 
       deleteCheckbox(){
+        this.props.delete(this.props.id);
         console.log("Delete checkbox called");
       }
       dataChanged(label ) {
