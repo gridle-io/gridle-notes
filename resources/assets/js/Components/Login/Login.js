@@ -18,7 +18,7 @@ export default class Login extends React.Component {
         }
        }
        handleClick(event){
-        var apiBaseUrl = "http://localhost/api/";
+        var apiBaseUrl = "http://localhost/";
         var self = this;
         var payload={
         "email":this.state.username,
@@ -26,14 +26,11 @@ export default class Login extends React.Component {
         }
         axios.post(apiBaseUrl+'login', payload)
         .then(function (response) {
-        console.log(response);
-        if(response.data.code == 200){
-        console.log("Login successfull");
-        var uploadScreen=[];
-        uploadScreen.push(<UploadScreen appContext={self.props.appContext}/>)
-        self.props.appContext.setState({loginPage:[],uploadScreen:uploadScreen})
+      
+        if(response.status == 200){
+        console.log("Login successfull");      
         }
-        else if(response.data.code == 204){
+        else if(response.status == 204){
         console.log("Username password do not match");
         alert("username password do not match")
         }
@@ -62,7 +59,7 @@ export default class Login extends React.Component {
                     onChange = {(event,newValue) => this.setState({password:newValue})}
                     />
                     <br/>
-                    <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+                    <RaisedButton label="Log in" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
               </div>
             );
