@@ -4,7 +4,6 @@ import Card  from './Components/Card/Card';
 import Note from './Components/Note/Note';
 
 import EditNote from './Components/EditNote/EditNote';
-import LoginPopup from './Components/Login/LoginPopup';
 import axios from 'axios';
 import clone from 'clone';
 
@@ -19,7 +18,8 @@ class Dashboard extends React.Component{
             notes:[],
             isopenEditpopup:false,     
             editablenote: [], 
-            processing:false
+            processing:false,
+          
     };
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
@@ -29,78 +29,87 @@ class Dashboard extends React.Component{
     this.handleCheck=this.handleCheck.bind(this);
   }
   componentDidMount() {
-    console.log("mounted");
-    axios.get(`http://localhost/api/notes/`)
-      .then(res => {
-        console.log(res.data);
-        this.setState({ notes:res.data });
-      });
+
+      console.log("tokrn is therer", localStorage.getItem("auth_token"));
+      console.log("mounted");
+      axios.get(`http://localhost/api/notes/`)
+        .then(res => {
+          console.log(res.data);
+          this.setState({notes: res.data});
+        });
+
   }
 
 
-  addnote(title,data,checked,checklist){
-    var that=this;
-    if(data!=null||checklist.isnotEnpty()){
+  addnote(title, data, checked, checklist) {
+    var that = this;
+    if (data != null || checklist.isnotEmpty()) {
       axios.post('http://localhost/api/notes/', {
-        "title":title,
-        "data":data,
-        "is_checklist":checked, 
-        "checklist":checklist
-    })
-    .then(function (response) {
-      console.log('resp',response.data);
-      let notearr =that.state.notes;
-      console.log(notearr);
-      notearr.push(response.data);
-      // console.log(notearrr);
-      that.setState({ notes:notearr});
-      // this.setState({notes:this.state.notes.push()})
-    })
-    .catch(function (error) {
-      console.log(error);
-    });}
+          "title": title,
+          "data": data,
+          "is_checklist": checked,
+          "checklist": checklist
+        })
+        .then(function (response) {
+          console.log('resp', response.data);
+          let notearr = that.state.notes;
+          console.log(notearr);
+          notearr.push(response.data);
+          // console.log(notearrr);
+          that.setState({
+            notes: notearr
+          });
+          // this.setState({notes:this.state.notes.push()})
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }
   openEditPopup(){
     this.setState({isopenEditpopup:!this.state.isopenEditpopup});
   }
 
-  submitEditedNote(editedNote){
-    console.log("Edited notesss",editedNote);
-    let notes=this.state.notes;
-    notes=notes.map((note)=>{
-      if(note.id == editedNote.id){
+  submitEditedNote(editedNote) {
+    console.log("Edited notesss", editedNote);
+    let notes = this.state.notes;
+    notes = notes.map((note) => {
+      if (note.id == editedNote.id) {
         return editedNote;
-      }
-      else{
+      } else {
         return note;
       }
     });
 
-this.setState({notes:notes});
-    this.setState({processing:true})
-    axios.put('http://localhost/api/notes/'+editedNote.id,editedNote).then(function(response){
-    if(response.status=200){
-
-      
-      console.log("done successs fullly");
-    }
+    this.setState({
+      notes: notes
+    });
+    this.setState({
+      processing: true
+    })
+    axios.put('http://localhost/api/notes/' + editedNote.id, editedNote).then(function (response) {
+      if (response.status = 200) {
+        console.log("done successs fullly");
+      }
     });
 
   }
-  editNote(props){
-    let notes=clone(this.state.notes);
-
-    var note=notes.filter(function(item)
-      {
-        if(item.id == props){
-          { return item};
+  editNote(props) {
+      let notes = clone(this.state.notes);
+      var note = notes.filter(function (item) {
+        if (item.id == props) {
+          {
+            return item
+          };
         }
       });
-    
-      
-      this.setState({editablenote:Object.assign({},note[0])});
-    
-      this.openEditPopup();
+
+
+    this.setState({
+      editablenote: Object.assign({}, note[0])
+    });
+
+    this.openEditPopup();
   }
   deleteNote(props){    
     var arr=this.state.notes;
@@ -114,35 +123,35 @@ this.setState({notes:notes});
      
   }
 
-  handleCheck(checkbox_id,note_id){
-    console.log("props of handle check",checkbox_id,note_id);
-     
-    
-      let notes = this.state.notes.map((note)=>{
-            if(note.id==note_id){
-                  note.checklist= note.checklist.map((checkbox)=>{
-                  if(checkbox.id==checkbox_id){
-                    checkbox.is_checked=!checkbox.is_checked;
-                    return checkbox;
-                  }
-                  else {
-                    return checkbox;
-                  }
-                });
-                axios.put('http://localhost/api/notes/'+note.id,note).then(function(response){
-                  if(response.status=200){
-                    console.log("done successs fullly");
-                  }
-                });
-                return note;
-            }
-            else {
-              return note;
+  handleCheck(checkbox_id, note_id) {
+    console.log("props of handle check", checkbox_id, note_id);
 
-            }
-      
-      });
-    this.setState({notes:notes});
+
+    let notes = this.state.notes.map((note) => {
+      if (note.id == note_id) {
+        note.checklist = note.checklist.map((checkbox) => {
+          if (checkbox.id == checkbox_id) {
+            checkbox.is_checked = !checkbox.is_checked;
+            return checkbox;
+          } else {
+            return checkbox;
+          }
+        });
+        axios.put('http://localhost/api/notes/' + note.id, note).then(function (response) {
+          if (response.status = 200) {
+            console.log("done successs fullly");
+          }
+        });
+        return note;
+      } else {
+        return note;
+
+      }
+
+    });
+    this.setState({
+      notes: notes
+    });
   }
 
  
@@ -150,7 +159,7 @@ this.setState({notes:notes});
 
     return(
       <div className="main-area">
-        <LoginPopup />
+        
         <EditNote  
             note={this.state.editablenote} 
             open={this.state.isopenEditpopup} 

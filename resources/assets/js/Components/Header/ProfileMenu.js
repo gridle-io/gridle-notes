@@ -19,20 +19,7 @@ export default class ProfileMenu extends Component {
         render(){
             return(
                <div className="profile-menu ">
-                    <IconButton tooltip="Apps" >
-                        <Apps hoverColor='#fff' />
-                    </IconButton>
 
-
-                    <Badge  badgeContent={""}
-                            secondary={true}
-                            className="notification"
-                            badgeStyle={{top:10, right:10,width:10,height:10}}
-                            >
-                            <IconButton tooltip="Notifications">
-                                <Notification hoverColor='#fff' />
-                            </IconButton>
-                    </Badge>
                   </div>
 
 

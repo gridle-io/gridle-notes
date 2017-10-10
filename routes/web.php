@@ -14,15 +14,6 @@
 Route::get('/', function () {
     return view('index'); //returns index.blade.php
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/login', 'AuthenticateController@authenticate');
+Route::post('/register', 'RegisterController@create'); 
+Route::get('/view-users', 'RegisterController@show');

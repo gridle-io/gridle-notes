@@ -7,45 +7,49 @@ import axios from 'axios';
 
 
 const style = {
-    margin: 15,
-   };
+  margin: 15,
+};
 export default class Login extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-        username:'',
-        password:''
-        }
+  constructor(props){
+    super(props);
+    this.state={
+      username:'',
+      password:'',
+      error:[]
+    }
+    
+    }
+    handleClick(event) {
+      var apiBaseUrl = "http://localhost/";
+      var self = this;
+      var payload = {
+        "email": this.state.username,
+        "password": this.state.password
+      }
+      axios.post(apiBaseUrl + 'login', payload)
+      .then(response => {
+        
+        if (response.status == 200) {
+          localStorage.setItem('auth_token', response.data.jwt);
+          console.log("Login successfull");
+          this.props.appContext.handleClose();
+          
+             }
+
+           })
+           .catch(error => {
+             if (error.response.status == 401) {
+               this.setState({
+                 error: error.response.data
+               })
+             }
+            
+           });
        }
-       handleClick(event){
-        var apiBaseUrl = "http://localhost/";
-        var self = this;
-        var payload={
-        "email":this.state.username,
-        "password":this.state.password
-        }
-        axios.post(apiBaseUrl+'login', payload)
-        .then(function (response) {
-      
-        if(response.status == 200){
-        console.log("Login successfull");      
-        }
-        else if(response.status == 204){
-        console.log("Username password do not match");
-        alert("username password do not match")
-        }
-        else{
-        console.log("Username does not exists");
-        alert("Username does not exist");
-        }
-        })
-        .catch(function (error) {
-        console.log(error);
-        });
-        }
         render() {
             return (
                   <div>
+                    <p className="error">{this.state.error.error}</p>
                    <TextField
                      hintText="Enter your Username"
                      floatingLabelText="Username"

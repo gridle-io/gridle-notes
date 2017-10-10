@@ -57,18 +57,23 @@ html {
 
 
     .header-menu{
-      display: inline-block;
+      display:flex;
       margin: auto;
       padding:0;
-    }
-
-
-    .profile-menu{
-      @extend .header-menu;
       .notification{
         padding: 0 !important;
 
       }
+      .avtar{
+        
+      }
+    }
+
+
+    .profile-menu{
+
+      @extend .header-menu;
+      
     }
 
    

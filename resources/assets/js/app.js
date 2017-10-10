@@ -7,10 +7,8 @@ import Dashboard from './Dashboard';
 import {White,cyan500,grey300,grey200,grey500}
 from 'material-ui/styles/colors';
 import DrawerLeft from './Components/Drawer/DrawerLeft.jsx';
+import LoginPopup from './Components/Login/LoginPopup';
 
-// import Drawer from './Components/Drawer/AppDrawer'
- 
- 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const muiTheme = getMuiTheme({
@@ -31,19 +29,44 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state={
-      processing:false
+      processing:false,
+      isLoggedin:'',
+      activeComponent:[]
     }
 
+    this.login=this.login.bind(this);
+
   }
+
+  componentDidMount() {
+    
+    console.log(this.state);
+        if (localStorage.getItem("auth_token")) {
+          this.setState({isLoggedin:true});
+          this.setState({activeComponent:<Dashboard/>})
+        }
+        else {
+          this.setState({isLoggedin:false});
+          console.log(this.state);
+          this.setState({activeComponent:<LoginPopup login={this.login.bind(this)}/>})
+          this.forceUpdate();
+        }
+        console.log(this.state);
+      }
+      login(){
+        console.log("Loading Notes");
+        this.setState({isLoggedin:true});
+        this.setState({activeComponent:<Dashboard/>}) 
+        
+      }
   render(){
     return(
-
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <Header processing={this.state.processing} />
           <div className="main-container">
               <DrawerLeft  />
-              <Dashboard />
+              {this.state.activeComponent}
           </div>
         </div>
       </MuiThemeProvider>

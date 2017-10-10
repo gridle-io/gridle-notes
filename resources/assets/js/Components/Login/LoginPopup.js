@@ -3,6 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Login from './Login';
+import Loginscreen from './Loginscreen'
 
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
@@ -20,17 +21,28 @@ export default class LoginPopup extends React.Component {
     super(props)
         this.state = {
             open: true,
+            loginPage:[],
+           
         };
         this.handleClose=this.handleClose.bind(this);
-        this.handleOpen=this.handleOpen.bind()
+        this.handleOpen=this.handleOpen.bind(this);
     }
 
+    componentWillMount(){
+      var loginPage =[];
+      loginPage.push(<Loginscreen key={1} parentContext={this}  />);
+      this.setState({
+                    loginPage:loginPage
+                      })
+    }
   handleOpen(){
     this.setState({open: true});
+    
   };
 
   handleClose() {
     this.setState({open: false});
+    this.props.login();
   };
 
   render() {
@@ -46,13 +58,14 @@ export default class LoginPopup extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-      <Login />
-        <FlatButton
+        {this.state.loginPage}
+       
+        {/* <FlatButton
         label="Ok"
         primary={true}
         keyboardFocused={true}
         onClick={this.handleClose}
-      />
+      /> */}
         </Dialog>
       </div>
     );
