@@ -30,7 +30,7 @@ export default class Login extends React.Component {
       .then(response => {
         
         if (response.status == 200) {
-          localStorage.setItem('auth_token', response.data.jwt);
+          localStorage.setItem('auth_token', 'Bearer '+response.data.jwt);
           console.log("Login successfull");
           this.props.appContext.handleClose();
           

@@ -29,7 +29,7 @@ class Dashboard extends React.Component{
     this.handleCheck=this.handleCheck.bind(this);
   }
   componentDidMount() {
-
+    axios.defaults.headers.common['jwt'] = localStorage.getItem("auth_token");
       console.log("tokrn is therer", localStorage.getItem("auth_token"));
       console.log("mounted");
       axios.get(`http://localhost/api/notes/`)

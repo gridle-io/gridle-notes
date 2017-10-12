@@ -11,16 +11,19 @@ class AuthenticateController extends Controller
 {
     protected function jwt(User $user)
     {
+        $key=env('JWT_AUTH','qwerty12345');
+
         $payload = array(
             'sub'   => $user->id,
             'iat'   => time(),
             'exp'   => time() + 60*60
         );
-        return JWT::encode($payload, Config::get('app.jwt-secret-key'));
+        return JWT::encode($payload, $key);
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request )
     {
+       
         // grab credentials from the request
         $credentials = $request->only('email', 'password');
         

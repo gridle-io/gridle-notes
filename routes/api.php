@@ -21,7 +21,7 @@ use App\Note;
 // });
 
 
-Route::get('notes', 'NoteController@index');
+Route::get('notes', 'NoteController@index')->middleware('check.Request');
 Route::get('notes/{note}', 'NoteController@show');
 Route::post('notes', 'NoteController@store');   
 Route::put('notes/{id}', 'NoteController@update');

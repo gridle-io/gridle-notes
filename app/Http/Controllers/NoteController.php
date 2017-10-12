@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+    {  
+        return json_encode($request->all());
         return Note::with('checklist')->get();
     }
 
