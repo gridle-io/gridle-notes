@@ -60,13 +60,7 @@ export default class LoginPopup extends React.Component {
         >
         {this.state.loginPage}
        
-        {/* <FlatButton
-        label="Ok"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
-      /> */}
-        </Dialog>
+       </Dialog>
       </div>
     );
   }

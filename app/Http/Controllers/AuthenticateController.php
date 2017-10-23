@@ -16,7 +16,7 @@ class AuthenticateController extends Controller
         $payload = array(
             'sub'   => $user->id,
             'iat'   => time(),
-            'exp'   => time() + 60*60
+            'exp'   => time() + 365*24*60
         );
         return JWT::encode($payload, $key);
     }
@@ -33,7 +33,7 @@ class AuthenticateController extends Controller
             return response()->json(['error' => 'Your email not exists'], 401);
         }
         if (Hash::check($credentials['password'], $user->password)) {
-            return response()->json(['jwt' => $this->jwt($user)], 200);
+            return response()->json(['jwt' => $this->jwt($user),'user_id'=>$user->id], 200);
         } else {
             return response()->json(['error' => 'Wrong passwd'], 401);
         }

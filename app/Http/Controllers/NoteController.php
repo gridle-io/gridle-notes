@@ -1,31 +1,30 @@
 <?php
 namespace App\Http\Controllers;
 use App\Note;
+use App\User;
 use App\Checklist;
-
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,$user_id)
     {  
-        return json_encode($request->all());
-        return Note::with('checklist')->get();
+        // return json_encode($request);
+        // return json_encode($request->all());
+        
+        return Note::where("user_id",$user_id)->with('checklist')->get();
     }
 
-    public function show(Note $note)
-    {   
-        return $note;
-    }
-
-    public function store(Request $request)
+    public function store(Request $request,$user_id)
     {
-
         $checklists = [];
         $requestData = $request->all();
-        // return $requestData;
         
-        $note = Note::create($requestData); 
+        $user = User::find($user_id);
+
+        $note = $user->notes()->create($requestData); 
+        return $note;
+
         if ($requestData["is_checklist"]==1) {
 
 

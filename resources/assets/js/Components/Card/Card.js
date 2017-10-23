@@ -34,6 +34,7 @@ export default class Card extends Component {
   ToggleCreateNote(title, data) {
 
 
+   
     console.log(data);
     if (data) {
       this.props.addnote(title, data,0,[]);

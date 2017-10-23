@@ -45,7 +45,7 @@ class CheckRequest
 
             // $user = User::where('id', '=', get_object_vars($credentials)['sub'])->first();
             
-            $request->id=get_object_vars($credentials['sub']);
+        
             return $next($request);
         }
         return response()->json(['error' => 'No jwt attached'], 401);

@@ -2,7 +2,6 @@ import React ,{Component}from 'react';
 import ReactDOM from 'react-dom';
 import Card  from './Components/Card/Card';
 import Note from './Components/Note/Note';
-
 import EditNote from './Components/EditNote/EditNote';
 import axios from 'axios';
 import clone from 'clone';
@@ -16,10 +15,10 @@ class Dashboard extends React.Component{
     
     this.state = {
             notes:[],
+            user_id:localStorage.getItem("user_id"),
             isopenEditpopup:false,     
-            editablenote: [], 
+            editablenote: [],
             processing:false,
-          
     };
     this.addnote=this.addnote.bind(this);
     this.deleteNote=this.deleteNote.bind(this);
@@ -30,12 +29,26 @@ class Dashboard extends React.Component{
   }
   componentDidMount() {
     axios.defaults.headers.common['jwt'] = localStorage.getItem("auth_token");
-      console.log("tokrn is therer", localStorage.getItem("auth_token"));
-      console.log("mounted");
-      axios.get(`http://localhost/api/notes/`)
+    let user_id= localStorage.getItem("user_id");
+    console.log(user_id);
+    console.log("token is therer", localStorage.getItem("auth_token"));
+    console.log("mounted");
+    this.setState({user_id:user_id});
+    console.log(this.state.user_id);
+      axios.get(`http://localhost/api/notes/`+this.state.user_id)
         .then(res => {
-          console.log(res.data);
+
+          console.log(res.status);
           this.setState({notes: res.data});
+        }).catch(function (error) {
+        let error_status=error.response.status;
+
+        if(error_status==400){
+          localStorage.clear();
+          this.props.parentContext.reset();
+          }
+
+          console.log(error.response.status);
         });
 
   }
@@ -44,22 +57,22 @@ class Dashboard extends React.Component{
   addnote(title, data, checked, checklist) {
     var that = this;
     if (data != null || checklist.isnotEmpty()) {
-      axios.post('http://localhost/api/notes/', {
+      axios.post('http://localhost/api/notes/'+this.state.user_id, {
           "title": title,
           "data": data,
           "is_checklist": checked,
-          "checklist": checklist
+          "checklist": checklist,
+          "user_id":that.state.user_id
         })
         .then(function (response) {
           console.log('resp', response.data);
           let notearr = that.state.notes;
           console.log(notearr);
           notearr.push(response.data);
-          // console.log(notearrr);
           that.setState({
             notes: notearr
           });
-          // this.setState({notes:this.state.notes.push()})
+      
         })
         .catch(function (error) {
           console.log(error);

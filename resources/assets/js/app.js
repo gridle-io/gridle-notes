@@ -16,8 +16,6 @@ const muiTheme = getMuiTheme({
     textColor: White,
     primary1Color:grey500,
     primary2Color:grey300,
-    
-    
   },
   appBar: {
     height: 60,
@@ -31,32 +29,38 @@ class App extends Component{
     this.state={
       processing:false,
       isLoggedin:'',
-      activeComponent:[]
+      activeComponent:[],
+      user_id:'',
     }
 
     this.login=this.login.bind(this);
 
   }
 
+  reset(){
+    if (localStorage.getItem("auth_token")) {
+      this.setState({isLoggedin:true});
+      this.setState({activeComponent:<Dashboard parentContext={this} user_id={this.state.user_id}/>})
+    }
+    else {
+      this.setState({isLoggedin:false});
+      console.log(this.state);
+      this.setState({activeComponent:<LoginPopup login={this.login.bind(this)}/>})
+      
+      this.forceUpdate();
+    }
+    console.log(this.state);
+
+  }
   componentDidMount() {
     
     console.log(this.state);
-        if (localStorage.getItem("auth_token")) {
-          this.setState({isLoggedin:true});
-          this.setState({activeComponent:<Dashboard/>})
-        }
-        else {
-          this.setState({isLoggedin:false});
-          console.log(this.state);
-          this.setState({activeComponent:<LoginPopup login={this.login.bind(this)}/>})
-          this.forceUpdate();
-        }
-        console.log(this.state);
+    this.reset();
       }
       login(){
         console.log("Loading Notes");
         this.setState({isLoggedin:true});
-        this.setState({activeComponent:<Dashboard/>}) 
+        this.setState({activeComponent:<Dashboard user_id={this.state.user_id}/>}) 
         
       }
   render(){

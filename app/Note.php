@@ -16,6 +16,10 @@ class Note extends Model
     protected $fillable = ['title', 'is_checklist','data'];
 
    
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
      public function checklist()
 	  {
 	    return $this->hasMany('App\Checklist');

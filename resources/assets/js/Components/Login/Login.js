@@ -31,6 +31,7 @@ export default class Login extends React.Component {
         
         if (response.status == 200) {
           localStorage.setItem('auth_token', 'Bearer '+response.data.jwt);
+          localStorage.setItem('user_id',response.data.user_id);
           console.log("Login successfull");
           this.props.appContext.handleClose();
           

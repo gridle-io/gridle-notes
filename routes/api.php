@@ -21,9 +21,8 @@ use App\Note;
 // });
 
 
-Route::get('notes', 'NoteController@index')->middleware('check.Request');
-Route::get('notes/{note}', 'NoteController@show');
-Route::post('notes', 'NoteController@store');   
+Route::get('notes/{user_id}', 'NoteController@index')->middleware('check.Request');
+Route::post('notes/{user_id}', 'NoteController@store');   
 Route::put('notes/{id}', 'NoteController@update');
 Route::delete('notes/{id}', 'NoteController@delete');
 Route::delete('checkbox/{id}', 'ChecklistController@delete');
