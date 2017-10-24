@@ -17,7 +17,8 @@ class Register extends Component {
       emailValid: false,
       passwordValid: false,
       formValid: false,
-      registationStatus:''
+      registationStatus:'',
+      error:''
     }
   }
 
@@ -36,19 +37,32 @@ class Register extends Component {
     }
     axios.post(apiBaseUrl+'/register', payload)
    .then((response) =>{
-       if(response.status == 200){
-           this.setState({registationStatus:true});
-           console.log(response);
+       
+    if(response.status==201){
+      this.setState({'error':response.data.error});
+      console.log(this.state.error);
+    }
+         if (response.status == 200) {
+          this.setState({'error':''});
+          this.setState({registationStatus:true});
+            localStorage.setItem('auth_token', 'Bearer '+response.data.jwt);
+            localStorage.setItem('user_id',response.data.user_id);
+            console.log("Login successfull");
+            // console.log(this.props);
+            this.props.appContext.handleClose();
+            
+               
+  
        console.log("registration successfull");
        
-       var loginscreen=[];
-       loginscreen.push(<Login key={1} parentContext={this}/>);
-       var loginmessage = "Not Registered yet.Go to registration";
-       self.props.parentContext.setState({loginscreen:loginscreen,
-       loginmessage:loginmessage,
-       buttonLabel:"Register",
-       isLogin:true
-        });
+      //  var loginscreen=[];
+      //  loginscreen.push(<Login key={1} parentContext={this} appContext={this.props.appContext}/>);
+      //  var loginmessage = "Not Registered yet.Go to registration";
+      //  self.props.parentContext.setState({loginscreen:loginscreen,
+      //  loginmessage:loginmessage,
+      //  buttonLabel:"Register",
+      //  isLogin:true
+      //   });
      }
    })
    .catch(function (error) {
@@ -127,6 +141,7 @@ class Register extends Component {
     return (
  
           <div>
+            <p>{this.state.error}</p>
             <h3 hidden={!this.state.registationStatus}>Registration Done successfully</h3>
            <TextField
              hintText="Enter your First Name"

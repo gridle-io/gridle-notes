@@ -24,7 +24,7 @@ export default class LoginPopup extends React.Component {
             loginPage:[],
            
         };
-        this.handleClose=this.handleClose.bind(this);
+       
         this.handleOpen=this.handleOpen.bind(this);
     }
 

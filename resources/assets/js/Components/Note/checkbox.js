@@ -51,7 +51,7 @@ const styles = {
               checked={this.props.is_checked}
               onCheck={this.updateCheck.bind(this)}
               style={{
-                width: '5%',
+                width: '10%',
                 margin: '0'
               }}
               iconStyle={styles.icon}/>

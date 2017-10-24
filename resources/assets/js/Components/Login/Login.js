@@ -15,13 +15,16 @@ export default class Login extends React.Component {
     this.state={
       username:'',
       password:'',
-      error:[]
+      error:[],
+    label:"Log in"
     }
     
     }
     handleClick(event) {
+      this.setState({label:"Processing"});
       var apiBaseUrl = "http://localhost/";
       var self = this;
+      localStorage.clear();
       var payload = {
         "email": this.state.username,
         "password": this.state.password
@@ -33,19 +36,17 @@ export default class Login extends React.Component {
           localStorage.setItem('auth_token', 'Bearer '+response.data.jwt);
           localStorage.setItem('user_id',response.data.user_id);
           console.log("Login successfull");
+          // console.log(this.props);
           this.props.appContext.handleClose();
           
              }
 
-           })
-           .catch(error => {
-             if (error.response.status == 401) {
-               this.setState({
-                 error: error.response.data
-               })
-             }
-            
-           });
+           }).catch(error => {
+            if (error.response.status == 401) {
+              this.setState({
+                error: error.response.data
+              })
+            }          });
        }
         render() {
             return (
@@ -64,7 +65,7 @@ export default class Login extends React.Component {
                     onChange = {(event,newValue) => this.setState({password:newValue})}
                     />
                     <br/>
-                    <RaisedButton label="Log in" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+                    <RaisedButton label={this.state.label} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
               </div>
             );

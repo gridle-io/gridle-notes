@@ -1,6 +1,7 @@
 html {
-    color: #000;
-    background: #B5BBCA; }
+    // color: #000;
+    background-color: #a3ac9b;
+   }
   
   body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
     margin: 0;
@@ -64,9 +65,7 @@ html {
         padding: 0 !important;
 
       }
-      .avtar{
-        
-      }
+     
     }
 
 
@@ -80,7 +79,7 @@ html {
     .main-container{
       display: flex;
     justify-content: flex-start;
-    background-color: #B5BBCA;
+  
     height: 100%; 
     .drawerleft{
       margin-left:0;

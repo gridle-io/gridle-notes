@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import IconMenuAction from './IconMenu';
-import NoteMenu from '../Note/NoteMenu';
+import NoteMenu from './NoteMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import ContentEditable from 'react-contenteditable';
 import CheckListNote from './checkbox';

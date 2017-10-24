@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import IconMenuAction from './IconMenu';
-import NoteMenu from '../Note/NoteMenu';
+import NoteMenu from './NoteMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import ContentEditable from 'react-contenteditable';
 import CheckListNote from './checkbox';
@@ -35,7 +35,7 @@ class CreateNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title:'Title',
+            title:'',
             data: 'Write a note',
             done:this.props.click,
             checkdata:"",
@@ -66,7 +66,7 @@ class CreateNote extends Component {
 
     handleSubmit(event){    
         this.props.ToggleCreateCheckedNote(this.state.title,this.state.checklist);
-        this.setState({title:"Title",data:"Write a note"});
+        this.setState({title:"",data:"Write a note"});
         this.setState({checklist:[],checkdata:""});
 
         this.setState({done: !this.state.done});

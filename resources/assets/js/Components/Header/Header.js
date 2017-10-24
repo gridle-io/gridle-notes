@@ -33,19 +33,13 @@ toggleDrawer() {
 
 }
 
-  
-
-
-
- 
 render (){
   return(
         <AppBar
         title="Keep Plugin"
-        children={<HeaderMenu processing={this.props.processing}/>}
+        children={<HeaderMenu processing={this.props.processing} appContext={this.props.appContext}/>}
         onLeftIconButtonTouchTap={this.toggleDrawer.bind(this)} 
                 />);
-
     }
 }
 

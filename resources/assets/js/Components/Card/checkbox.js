@@ -5,7 +5,7 @@ import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 import ContentEditable from 'react-contenteditable';
-
+import InlineEdit from 'react-edit-inline';
 
 
 const styles = {

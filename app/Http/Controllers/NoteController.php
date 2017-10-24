@@ -23,7 +23,7 @@ class NoteController extends Controller
         $user = User::find($user_id);
 
         $note = $user->notes()->create($requestData); 
-        return $note;
+        
 
         if ($requestData["is_checklist"]==1) {
 
